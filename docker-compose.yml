@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_DB: stockmarket
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+
+  app1:
+    build: .
+    container_name: app1
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/stockmarket
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - db
+
+  app2:
+    build: .
+    container_name: app2
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/stockmarket
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - app1
+      - app2
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
