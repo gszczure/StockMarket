@@ -15,12 +15,14 @@ public class WalletService {
     private final WalletRepository walletRepository;
     private final WalletStockRepository walletStockRepository;
     private final BankService bankService;
+    private final OperationLogService auditLogService;
 
     public WalletService(WalletRepository walletRepository, WalletStockRepository walletStockRepository,
-                         BankService bankService) {
+                         BankService bankService, OperationLogService auditLogService) {
         this.walletRepository = walletRepository;
         this.walletStockRepository = walletStockRepository;
         this.bankService = bankService;
+        this.auditLogService = auditLogService;
     }
 
     @Transactional
@@ -37,6 +39,8 @@ public class WalletService {
         increaseWalletStock(walletStock);
 
         walletStockRepository.save(walletStock);
+
+        auditLogService.log("buy", walletId, stockName);
     }
 
     @Transactional
@@ -51,6 +55,8 @@ public class WalletService {
         bankService.increaseStock(stockName);
 
         walletStockRepository.save(walletStock);
+
+        auditLogService.log("sell", walletId, stockName);
     }
 
     public void operate(String walletId, String stockName, OperationType operationType) {
