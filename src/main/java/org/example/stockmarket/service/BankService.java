@@ -1,5 +1,6 @@
 package org.example.stockmarket.service;
 
+import org.example.stockmarket.exception.NotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.example.stockmarket.dto.BankStocksDto;
 import org.example.stockmarket.mapper.BankMapper;
@@ -20,7 +21,7 @@ public class BankService {
 
     public BankStock getStock(String stockName) {
         return bankStockRepository.findById(stockName)
-                .orElseThrow(() -> new IllegalArgumentException("Stock not found: " + stockName));
+                .orElseThrow(() -> new NotFoundException("Stock not found: " + stockName));
     }
 
     public void decreaseStock(String stockName) {

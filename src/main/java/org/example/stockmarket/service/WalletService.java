@@ -1,5 +1,6 @@
 package org.example.stockmarket.service;
 
+import org.example.stockmarket.exception.NotFoundException;
 import org.example.stockmarket.model.BankStock;
 import org.example.stockmarket.model.OperationType;
 import org.example.stockmarket.model.Wallet;
@@ -76,7 +77,7 @@ public class WalletService {
 
     public Wallet getWallet(String walletId) {
         return walletRepository.findById(walletId)
-                .orElseThrow(() -> new IllegalArgumentException("Wallet not found: " + walletId));
+                .orElseThrow(() -> new NotFoundException("Wallet not found: " + walletId));
     }
 
     private Wallet getOrCreateWallet(String walletId) {
@@ -91,7 +92,7 @@ public class WalletService {
     private WalletStock getWalletStock(String walletId, String stockName) {
         return walletStockRepository
                 .findByWalletIdAndStockName(walletId, stockName)
-                .orElseThrow(() -> new IllegalArgumentException("Stock not found in wallet"));
+                .orElseThrow(() -> new NotFoundException("Stock not found in wallet"));
     }
 
     private WalletStock getOrCreateWalletStock(Wallet wallet, BankStock bankStock) {
