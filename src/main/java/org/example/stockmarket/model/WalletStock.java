@@ -1,8 +1,14 @@
 package org.example.stockmarket.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WalletStock {
 
     @Id
