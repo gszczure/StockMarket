@@ -8,12 +8,28 @@
 
 ---
 
+## Custom port
+
+You can override the default port:
+
+```
+PORT=9090 docker compose up --build
+```
+
+Application will be available at:
+
+```
+http://localhost:9090
+```
+
+---
+
 ## Running application
 
 Start the application using Docker:
 
 ```
-docker-compose up --build
+docker compose up --build
 ```
 
 Application will be available at:
