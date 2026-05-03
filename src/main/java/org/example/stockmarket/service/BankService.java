@@ -52,7 +52,11 @@ public class BankService {
 
         List<BankStock> stocks = BankMapper.toEntities(BankStockRequest);
 
-        bankStockRepository.deleteAll();
-        bankStockRepository.saveAll(stocks);
+        for (BankStock stock : stocks) {
+            bankStockRepository.findById(stock.getName())
+                    .ifPresentOrElse(existing -> {
+                        existing.setQuantity(stock.getQuantity());
+                    }, () -> bankStockRepository.save(stock));
+        }
     }
 }
