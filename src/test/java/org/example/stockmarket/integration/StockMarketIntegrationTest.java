@@ -19,7 +19,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class StockMarketIntegrationTest {
+class StockMarketIntegrationTest extends IntegrationTests {
 
     @LocalServerPort
     int port;
