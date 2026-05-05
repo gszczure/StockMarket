@@ -50,6 +50,8 @@ The project contains the following types of tests:
 
 Integration tests run against a real PostgreSQL database using Testcontainers.
 
+![img.png](img.png)
+
 ## Running tests
 
 Run all tests:
